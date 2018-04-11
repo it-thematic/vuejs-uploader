@@ -1,4 +1,4 @@
-import fileHelpers from '@/helpers/file'
+import fileHelpers from './helpers/file'
 export default class FileUpload {
   constructor (file) {
     this.file = file

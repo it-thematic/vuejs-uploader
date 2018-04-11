@@ -21,7 +21,7 @@
 
       <span v-if="isMultipleFileUpload">
         <slot name="browse-btn">
-          <span class="vuejs-uploader__btn">Browse</span>
+          <span class="vuejs-uploader__btn vuejs-uploader__btn--browse">Выбрать файлы</span>
         </slot>
       </span>
       <!-- File Input -->
@@ -30,11 +30,11 @@
 
 
     <span v-if="isMultipleFileUpload">
-      <button type="button" class="vuejs-uploader__btn vuejs-uploader__btn--clear" @click="clear" :disabled="noFiles">
-        <slot name="clear-btn">Clear</slot>
+      <button type="button" class="vuejs-uploader__btn vuejs-uploader__btn--clear" @click="clear" :disabled="noFiles" :class="{'vuejs-uploader__btn--disabled' : noFiles}">
+        <slot name="clear-btn">Очистить</slot>
       </button>
-      <button type="button" class="vuejs-uploader__btn vuejs-uploader__btn--upload" @click="upload" :disabled="isUploadDisabled" :class="{'vuejs-uploader__btn--ready' : hasFiles}">
-        <slot name="upload-btn">Upload</slot>
+      <button type="button" class="vuejs-uploader__btn vuejs-uploader__btn--upload" @click="upload" :disabled="isUploadDisabled" :class="{'vuejs-uploader__btn--ready' : hasFiles, 'vuejs-uploader__btn--disabled' : !hasFiles && noFiles}">
+        <slot name="upload-btn">Загрузить</slot>
       </button>
     </span>
 
@@ -66,7 +66,7 @@
         </div>
         <div>
           <button type="button" class="vuejs-uploader__btn vuejs-uploader__btn--delete" @click="removeFile(fileObj)">
-            <slot name="remove-btn">Remove</slot>
+            <slot name="remove-btn">Удалить</slot>
           </button>
         </div>
       </li>
@@ -666,12 +666,20 @@ export default {
   overflow hidden
   position relative
   padding 6px 10px
-  border 1px solid #ccc
-  border-radius 3px
+  // border 1px solid #ccc
+  border-radius 1.5px
   font-size 100%
-  background inherit
+  background #00695c
+  color white
   font-family inherit
   margin-right 2px
+
+.vuejs-uploader__btn--disabled
+  background #439889
+
+.vuejs-uploader__btn--browse
+  background #ff8f00
+  padding 8.5px 10px
 
 .vuejs-uploader__btn--delete
   padding 3px 6px
@@ -684,7 +692,7 @@ export default {
 
 .vuejs-uploader__file--preview
   display inline-block
-  width 100px
+  width 60px
   display flex
   align-items center
   justify-content center
@@ -822,8 +830,8 @@ file($colour) {
   color #fff
   border-radius 3px
   line-height 60px
-  height 60px
-  width 50px
+  height 40px
+  width 30px
   text-align center
   display inline-block
   text-transform uppercase
@@ -927,5 +935,4 @@ file($colour) {
   &.zip {}
   &.webarchive {}
 }
-
 </style>
